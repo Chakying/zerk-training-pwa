@@ -147,6 +147,7 @@
       <div class="header-actions"><button id="backupBtn" class="icon-btn backup-btn" aria-label="数据备份">备份</button><button id="installBtn" class="icon-btn" aria-label="安装应用" title="安装应用">＋</button></div>
     </header>
 
+    <button id="plansBtn" class="add-btn" style="margin:0 0 12px">训练计划库 · 导入 / 更新</button>
     <nav id="dayTabs" class="day-tabs" aria-label="选择训练日"></nav>
 
     <section class="summary">
@@ -362,6 +363,7 @@
     document.addEventListener('visibilitychange',()=>{if(timer.running)tick()});
     save();render();if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
   </script>
+  <script src="plans.js"></script>
 </body>
 </html>
 
