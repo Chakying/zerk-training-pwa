@@ -1,0 +1,15 @@
+{
+  "name": "Zerk 健身训练",
+  "short_name": "Zerk 训练",
+  "description": "训练动作、完成组数与组间休息计时",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#09090a",
+  "theme_color": "#09090a",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
+
