@@ -1,0 +1,20 @@
+import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const context=vm.createContext({URL});
+vm.runInContext(readFileSync('plans.js','utf8')+';globalThis.api=ZerkPlans;',context);
+const {validate,githubURL}=context.api;
+const plan={format:'zerk-plan',version:1,name:'测试计划',days:[{day:'chest',exercises:[{name:'飞鸟',part:'胸',equipment:'哑铃',sets:3,reps:30,type:'drop',multiplier:2,segments:[{weight:8,reps:8},{weight:6,reps:10},{weight:4,reps:12}]}]}]};
+assert.equal(validate(plan).days[0].exercises[0].segments.length,3);
+assert.equal(validate(plan).days[0].exercises[0].multiplier,2);
+assert.throws(()=>validate({...plan,version:2}));
+assert.throws(()=>validate({...plan,days:[]}));
+assert.throws(()=>validate({...plan,days:[{day:'__proto__',exercises:[]}]}));
+const invalid=JSON.parse(JSON.stringify(plan));invalid.days[0].exercises[0].sets=-1;assert.throws(()=>validate(invalid));
+assert.equal(githubURL('https://github.com/test/repo/blob/main/plan.json'),'https://raw.githubusercontent.com/test/repo/main/plan.json');
+assert.throws(()=>githubURL('https://evil.example/plan.json'));
+assert.throws(()=>githubURL('https://raw.githubusercontent.com/test/repo/main/plan.json?token=secret'));
+assert.throws(()=>githubURL('javascript:alert(1)'));
+const html=readFileSync('index.html','utf8');new vm.Script(html.match(/<script>([\s\S]*?)<\/script>/)[1]);
+console.log('Plan validation, URL restrictions, drop-set roundtrip and main script syntax passed.');
+
