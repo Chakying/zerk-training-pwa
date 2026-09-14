@@ -1,5 +1,5 @@
 import { cp, mkdir, rm } from 'node:fs/promises';
-const files=['index.html','manifest.webmanifest','sw.js','icon.svg'];
+const files=['index.html','manifest.webmanifest','sw.js','icon.svg','plans.js'];
 await rm('dist',{recursive:true,force:true});
 await mkdir('dist',{recursive:true});
 await Promise.all(files.map(file=>cp(file,`dist/${file}`)));
